@@ -1,0 +1,36 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "[![Actions Status](https://github.com/AnnaKudriaeva/fullstack-javascript-project-46/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/AnnaKudriaeva/fullstack-javascript-project-46/actions)",
+  "main": "bin/gendiff.js",
+  "scripts": {
+    "dev": "node bin/gendiff.js",
+    "test": "jest"
+  },
+  "bin": {
+    "gendiff": "./bin/gendiff.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^12.1.0",
+    "js-yaml": "^4.1.0",
+    "lodash": "^4.17.21"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "mjs",
+      "cjs",
+      "jsx",
+      "ts",
+      "tsx",
+      "json",
+      "node",
+      "txt"
+    ]
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
