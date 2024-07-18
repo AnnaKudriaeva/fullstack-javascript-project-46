@@ -1,5 +1,5 @@
 function formatJson(diff) {
-    return JSON.stringify(diff, null, 4);
-};
+  return JSON.stringify(diff, null, 4);
+}
 
-module.exports = formatJson;
+export default formatJson;

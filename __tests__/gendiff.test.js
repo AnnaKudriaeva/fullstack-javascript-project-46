@@ -1,8 +1,8 @@
 // __tests__/gendiff.test.js
-const path = require('path');
-const fs = require('fs');
-const { generateDiff } = require('../lib/gendiff'); // Adjusted to match the export in gendiff.js
-const parseFile = require('../lib/parsers');
+import path from 'path';
+import fs from 'fs';
+import generateDiff from '../lib/gendiff.js';
+import parseFile from '../lib/parsers.js';
 
 test('genDiff JSON', () => {
   const json1 = path.resolve('__tests__/file1.json');
@@ -20,6 +20,6 @@ test('genDiff YAML', () => {
   const data1 = parseFile(yml1);
   const data2 = parseFile(yml2);
   const expectedOutput = fs.readFileSync(path.resolve('__tests__/expected_output.txt'), 'utf-8').trim();
-  const diff = generateDiff(data1, data2, 'stylish'); 
+  const diff = generateDiff(data1, data2, 'stylish');
   expect(diff).toBe(expectedOutput);
 });
