@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import Command from 'commander';
+import { Command } from 'commander';
 import parseFile from '../lib/parsers.js';
 import generateDiff from '../lib/gendiff.js';
 
