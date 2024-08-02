@@ -1,8 +1,8 @@
 function formatValue(value, depth, indentSize = 4) {
-  if (typeof value === 'object' && value !== null) {
-    const nestedCurrentIndent = ' '.repeat((depth + 1) * indentSize);
-    const nestedNestedIndent = ' '.repeat((depth + 2) * indentSize);
+  const nestedCurrentIndent = ' '.repeat((depth + 1) * indentSize);
+  const nestedNestedIndent = ' '.repeat((depth + 2) * indentSize);
 
+  if (value && typeof value === 'object') {
     const formattedItems = Object.entries(value).map(
       ([k, v]) => `${nestedNestedIndent}${k}: ${formatValue(v, depth + 1, indentSize)}`,
     );
@@ -13,32 +13,35 @@ function formatValue(value, depth, indentSize = 4) {
   if (value === null) {
     return 'null';
   }
-  if (typeof value === 'boolean') {
+  if (value === true || value === false) {
     return value.toString().toLowerCase();
   }
   return value.toString();
 }
 
 function formatItem(key, item, currentIndent, depth, formatStylishFn) {
-  switch (item.type) {
-    case 'unchanged':
-      return `${currentIndent}    ${key}: ${formatValue(item.value, depth)}`;
-    case 'added':
-      return `${currentIndent}  + ${key}: ${formatValue(item.value, depth)}`;
-    case 'removed':
-      return `${currentIndent}  - ${key}: ${formatValue(item.value, depth)}`;
-    case 'changed': {
-      const [oldValue, newValue] = item.value;
-      return [
-        `${currentIndent}  - ${key}: ${formatValue(oldValue, depth)}`,
-        `${currentIndent}  + ${key}: ${formatValue(newValue, depth)}`,
-      ].join('\n');
-    }
-    case 'nested':
-      return `${currentIndent}    ${key}: ${formatStylishFn(item.value, depth + 1)}`;
-    default:
-      throw new Error(`Unknown item type: ${item.type}`);
+  const itemType = item.type;
+
+  if (itemType === 'unchanged') {
+    return `${currentIndent}    ${key}: ${formatValue(item.value, depth)}`;
   }
+  if (itemType === 'added') {
+    return `${currentIndent}  + ${key}: ${formatValue(item.value, depth)}`;
+  }
+  if (itemType === 'removed') {
+    return `${currentIndent}  - ${key}: ${formatValue(item.value, depth)}`;
+  }
+  if (itemType === 'changed') {
+    const [oldValue, newValue] = item.value;
+    return [
+      `${currentIndent}  - ${key}: ${formatValue(oldValue, depth)}`,
+      `${currentIndent}  + ${key}: ${formatValue(newValue, depth)}`,
+    ].join('\n');
+  }
+  if (itemType === 'nested') {
+    return `${currentIndent}    ${key}: ${formatStylishFn(item.value, depth + 1)}`;
+  }
+  throw new Error(`Unknown item type: ${itemType}`);
 }
 
 function formatStylish(diff, depth = 0) {
