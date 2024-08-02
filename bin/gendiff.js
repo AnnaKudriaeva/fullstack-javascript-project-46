@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
-import parseFile from '../lib/parsers.js';
-import generateDiff from '../lib/gendiff.js';
+import compareFiles from '../lib/compareFiles.js';
 
 const program = new Command();
 
@@ -13,10 +12,12 @@ program
   .argument('<filepath2>')
   .option('-f, --format <type>', 'output format', 'stylish')
   .action((filepath1, filepath2, options) => {
-    const data1 = parseFile(filepath1);
-    const data2 = parseFile(filepath2);
-    const diff = generateDiff(data1, data2, options.format);
-    console.log(diff);
+    try {
+      const diff = compareFiles(filepath1, filepath2, options.format);
+      console.log(diff);
+    } catch (error) {
+      console.error(`Error: ${error.message}`);
+    }
   });
 
 program.parse(process.argv);
