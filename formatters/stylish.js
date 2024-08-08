@@ -2,11 +2,10 @@ function formatValue(value, depth, indentSize = 4) {
   const nestedCurrentIndent = ' '.repeat((depth + 1) * indentSize);
   const nestedNestedIndent = ' '.repeat((depth + 2) * indentSize);
 
-  if (value && typeof value === 'object') {
+  if (value && value.constructor === Object) {
     const formattedItems = Object.entries(value).map(
       ([k, v]) => `${nestedNestedIndent}${k}: ${formatValue(v, depth + 1, indentSize)}`,
     );
-
     const formattedItemsStr = formattedItems.join('\n');
     return `{\n${formattedItemsStr}\n${nestedCurrentIndent}}`;
   }
@@ -46,9 +45,9 @@ function formatItem(key, item, currentIndent, depth, formatStylishFn) {
 
 function formatStylish(diff, depth = 0) {
   const currentIndent = ' '.repeat(depth * 4);
-  const lines = Object.keys(diff)
-    .sort()
-    .map((key) => formatItem(key, diff[key], currentIndent, depth, formatStylish));
+  const sortedKeys = [...Object.keys(diff)].sort();
+  const formatDiffItem = (key) => formatItem(key, diff[key], currentIndent, depth, formatStylish);
+  const lines = sortedKeys.map(formatDiffItem);
 
   const formattedLines = lines.join('\n');
   return `{\n${formattedLines}\n${currentIndent}}`;
