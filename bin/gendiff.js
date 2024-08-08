@@ -16,6 +16,4 @@ program
     } catch (error) {
       console.error(`Error: ${error.message}`);
     }
-  });
-
-program.parse(process.argv);
+  }).parse(process.argv);
