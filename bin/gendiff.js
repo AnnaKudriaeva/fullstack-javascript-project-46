@@ -12,11 +12,7 @@ program
   .argument('<filepath2>')
   .option('-f, --format <type>', 'output format', 'stylish')
   .action((filepath1, filepath2, options) => {
-    try {
-      const diff = compareFiles(filepath1, filepath2, options.format);
-      console.log(diff);
-    } catch (error) {
-      console.error(`Error: ${error.message}`);
-    }
+    const diff = compareFiles(filepath1, filepath2, options.format);
+    console.log(diff);
   })
   .parse(process.argv);
