@@ -8,12 +8,15 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version: [21.7.3]
+          node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: make install
       - run: make lint
