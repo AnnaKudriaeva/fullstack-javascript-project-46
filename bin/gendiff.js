@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 
-import { program } from 'commander';
+import Command from 'commander';
 import compareFiles from '../lib/compareFiles.js';
+
+const program = new Command();
 
 program
   .version('1.0.0')
@@ -16,4 +18,5 @@ program
     } catch (error) {
       console.error(`Error: ${error.message}`);
     }
-  }).parse(process.argv);
+  })
+  .parse(process.argv);

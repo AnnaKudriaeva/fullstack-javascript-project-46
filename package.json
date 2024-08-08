@@ -4,6 +4,7 @@
   "description": "[![Actions Status](https://github.com/AnnaKudriaeva/fullstack-javascript-project-46/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/AnnaKudriaeva/fullstack-javascript-project-46/actions)",
   "main": "bin/gendiff.js",
   "scripts": {
+    "dev": "node bin/gendiff.js",
     "test": "jest"
   },
   "type": "module",
