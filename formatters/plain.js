@@ -13,7 +13,8 @@ function formatValuePlain(value) {
 
 function formatPlain(diff, path = '') {
   return Object.keys(diff)
-    .sort()
+    .slice() // Create a shallow copy to avoid mutating the original array
+    .sort((a, b) => a.localeCompare(b)) // Sort without mutating the original array
     .flatMap((key) => {
       const item = diff[key];
       const itemType = item.type;
