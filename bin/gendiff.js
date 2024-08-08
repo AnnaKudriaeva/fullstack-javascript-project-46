@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { program } from 'commander';
-//import compareFiles from '../lib/compareFiles.js';
+import compareFiles from '../lib/compareFiles.js';
 
 program
   .version('0.0.1')
@@ -11,7 +11,7 @@ program
   .action((path1, path2) => { // Код вызова внутри action
     // Вывод на экран происходит здесь, а не внутри библиотеки
 
-//    const diff = compareFiles(path1, path2, program.opts().format);
-    console.log(path1, path2);
+    const diff = compareFiles(path1, path2, program.opts().format);
+    console.log(diff);
   })
   .parse(process.argv);
