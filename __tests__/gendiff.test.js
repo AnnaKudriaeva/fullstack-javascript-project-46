@@ -12,44 +12,60 @@ const runTest = (file1, file2, expectedFile, format) => {
   expect(diff).toBe(expectedOutput);
 };
 
-test('genDiff JSON', () => {
-  const json1 = path.resolve('fixtures/file1.json');
-  const json2 = path.resolve('fixtures/file2.json');
-  const expectedOutput = path.resolve('fixtures/expected_output.txt');
-  runTest(json1, json2, expectedOutput, 'stylish');
-});
+const testCases = [
+  {
+    name: 'JSON stylish',
+    file1: 'fixtures/file1.json',
+    file2: 'fixtures/file2.json',
+    expectedOutput: 'fixtures/expected_output.txt',
+    format: 'stylish',
+  },
+  {
+    name: 'YAML stylish',
+    file1: 'fixtures/file1.yml',
+    file2: 'fixtures/file2.yml',
+    expectedOutput: 'fixtures/expected_output.txt',
+    format: 'stylish',
+  },
+  {
+    name: 'JSON plain',
+    file1: 'fixtures/file1.json',
+    file2: 'fixtures/file2.json',
+    expectedOutput: 'fixtures/expected_output_plain.txt',
+    format: 'plain',
+  },
+  {
+    name: 'YAML plain',
+    file1: 'fixtures/file1.yml',
+    file2: 'fixtures/file2.yml',
+    expectedOutput: 'fixtures/expected_output_plain.txt',
+    format: 'plain',
+  },
+  {
+    name: 'JSON json',
+    file1: 'fixtures/file1.json',
+    file2: 'fixtures/file2.json',
+    expectedOutput: 'fixtures/expected_output_json.json',
+    format: 'json',
+  },
+  {
+    name: 'YAML json',
+    file1: 'fixtures/file1.yml',
+    file2: 'fixtures/file2.yml',
+    expectedOutput: 'fixtures/expected_output_json.json',
+    format: 'json',
+  },
+];
 
-test('genDiff YAML', () => {
-  const yml1 = path.resolve('fixtures/file1.yml');
-  const yml2 = path.resolve('fixtures/file2.yml');
-  const expectedOutput = path.resolve('fixtures/expected_output.txt');
-  runTest(yml1, yml2, expectedOutput, 'stylish');
-});
-
-test('genDiff JSON plain', () => {
-  const json1 = path.resolve('fixtures/file1.json');
-  const json2 = path.resolve('fixtures/file2.json');
-  const expectedOutput = path.resolve('fixtures/expected_output_plain.txt');
-  runTest(json1, json2, expectedOutput, 'plain');
-});
-
-test('genDiff YAML plain', () => {
-  const yml1 = path.resolve('fixtures/file1.yml');
-  const yml2 = path.resolve('fixtures/file2.yml');
-  const expectedOutput = path.resolve('fixtures/expected_output_plain.txt');
-  runTest(yml1, yml2, expectedOutput, 'plain');
-});
-
-test('genDiff JSON json', () => {
-  const json1 = path.resolve('fixtures/file1.json');
-  const json2 = path.resolve('fixtures/file2.json');
-  const expectedOutput = path.resolve('fixtures/expected_output_json.json');
-  runTest(json1, json2, expectedOutput, 'json');
-});
-
-test('genDiff YAML json', () => {
-  const yml1 = path.resolve('fixtures/file1.yml');
-  const yml2 = path.resolve('fixtures/file2.yml');
-  const expectedOutput = path.resolve('fixtures/expected_output_json.json');
-  runTest(yml1, yml2, expectedOutput, 'json');
+testCases.forEach(({
+  name, file1, file2, expectedOutput, format,
+}) => {
+  test(`genDiff ${name}`, () => {
+    runTest(
+      path.resolve(file1),
+      path.resolve(file2),
+      path.resolve(expectedOutput),
+      format,
+    );
+  });
 });
