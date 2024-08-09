@@ -1,17 +1,23 @@
 #!/usr/bin/env node
 
-import { program } from 'commander';
+import { Command } from 'commander';
 import compareFiles from '../lib/compareFiles.js';
 
-program
-  .version('0.0.1')
-  .arguments('<filepath1> <filepath2>')
-  .description('Compares two configuration files and shows a difference.')
-  .option('-f, --format [type]', 'output format', 'stylish') // Дефолтный формат – 4 параметр
-  .action((path1, path2) => { // Код вызова внутри action
-    // Вывод на экран происходит здесь, а не внутри библиотеки
+const program = new Command();
 
-    const diff = compareFiles(path1, path2, program.opts().format);
-    console.log(diff);
-  })
-  .parse(process.argv);
+program
+  .version('1.0.0')
+  .description('Compares two configuration files and shows a difference.')
+  .argument('<filepath1>')
+  .argument('<filepath2>')
+  .option('-f, --format <type>', 'output format', 'stylish')
+  .action((filepath1, filepath2, options) => {
+    try {
+      const diff = compareFiles(filepath1, filepath2, options.format);
+      console.log(diff);
+    } catch (error) {
+      console.error(`Error: ${error.message}`);
+    }
+  });
+
+program.parse(process.argv);

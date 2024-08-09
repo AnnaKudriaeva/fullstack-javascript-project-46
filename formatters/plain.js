@@ -49,7 +49,6 @@ function formatPlain(diff, path = '') {
       }
     })();
 
-    // Concatenate the processed result with the rest
     return [...processedItem, ...processKeys(remainingKeys)];
   }
 
