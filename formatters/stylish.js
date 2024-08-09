@@ -45,12 +45,22 @@ function formatItem(key, item, currentIndent, depth, formatStylishFn) {
 
 function formatStylish(diff, depth = 0) {
   const currentIndent = ' '.repeat(depth * 4);
-  const sortedKeys = [...Object.keys(diff)].sort();
-  const formatDiffItem = (key) => formatItem(key, diff[key], currentIndent, depth, formatStylish);
-  const lines = sortedKeys.map(formatDiffItem);
 
-  const formattedLines = lines.join('\n');
-  return `{\n${formattedLines}\n${currentIndent}}`;
+  const keys = Object.keys(diff);
+
+  const lines = (function formatSortedKeys(unsortedKeys) {
+    if (unsortedKeys.length === 0) return '';
+
+    const minKey = unsortedKeys.reduce((a, b) => (a < b ? a : b));
+    const remainingKeys = unsortedKeys.filter((key) => key !== minKey);
+
+    const formattedLine = formatItem(minKey, diff[minKey], currentIndent, depth, formatStylish);
+    const restFormatted = formatSortedKeys(remainingKeys);
+
+    return restFormatted ? `${formattedLine}\n${restFormatted}` : formattedLine;
+  }(keys));
+
+  return `{\n${lines}\n${currentIndent}}`;
 }
 
 export default formatStylish;
