@@ -2,7 +2,7 @@
 import path from 'path';
 import fs from 'fs';
 import generateDiff from '../lib/gendiff.js';
-import parseFile from '../lib/parsers.js';
+import parseFile from '../lib/parser.js';
 
 const runTest = (file1, file2, expectedFile, format) => {
   const data1 = parseFile(file1);
