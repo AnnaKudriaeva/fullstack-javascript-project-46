@@ -18,7 +18,6 @@ const runDiffTest = (file1Path, file2Path, expectedFilePath, format) => {
   expect(diff).toBe(expectedOutput);
 };
 
-// Тесты
 test('genDiff JSON stylish', () => {
   runDiffTest(
     path.resolve('__fixtures__/file1.json'),

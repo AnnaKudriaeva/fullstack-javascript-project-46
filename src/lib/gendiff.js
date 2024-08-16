@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import { formatStylish, formatPlain, formatJson } from '../formatters/index.js';
 
+// Immutable version of findDifferences
 function findDifferences(obj1, obj2) {
   const keys = _.sortBy(_.union(_.keys(obj1), _.keys(obj2)));
 
@@ -10,27 +11,22 @@ function findDifferences(obj1, obj2) {
 
     if (_.isPlainObject(value1) && _.isPlainObject(value2)) {
       const nestedDiff = findDifferences(value1, value2);
-      acc[key] = { type: 'nested', value: nestedDiff };
-      return acc;
+      return { ...acc, [key]: { type: 'nested', value: nestedDiff } };
     }
 
     if (!_.has(obj1, key)) {
-      acc[key] = { type: 'added', value: value2 };
-      return acc;
+      return { ...acc, [key]: { type: 'added', value: value2 } };
     }
 
     if (!_.has(obj2, key)) {
-      acc[key] = { type: 'removed', value: value1 };
-      return acc;
+      return { ...acc, [key]: { type: 'removed', value: value1 } };
     }
 
     if (!_.isEqual(value1, value2)) {
-      acc[key] = { type: 'changed', value: [value1, value2] };
-      return acc;
+      return { ...acc, [key]: { type: 'changed', value: [value1, value2] } };
     }
 
-    acc[key] = { type: 'unchanged', value: value1 };
-    return acc;
+    return { ...acc, [key]: { type: 'unchanged', value: value1 } };
   }, {});
 }
 
