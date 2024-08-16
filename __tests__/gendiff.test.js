@@ -3,24 +3,24 @@ import fs from 'fs';
 import generateDiff from '../src/lib/gendiff.js';
 import parseData from '../src/lib/parsers.js';
 
-// Функция для получения расширения файла
 const getFileExtension = (filePath) => path.extname(filePath).substring(1);
 
-// Функция для выполнения теста
-const runTest = (file1, file2, expectedFile, format) => {
-  const extension1 = getFileExtension(file1);
-  const extension2 = getFileExtension(file2);
+const getFileData = (filePath) => {
+  const extension = getFileExtension(filePath);
+  return parseData(fs.readFileSync(filePath, 'utf-8'), extension);
+};
 
-  const data1 = parseData(fs.readFileSync(file1, 'utf-8'), extension1);
-  const data2 = parseData(fs.readFileSync(file2, 'utf-8'), extension2);
-  const expectedOutput = fs.readFileSync(expectedFile, 'utf-8').trim();
-  const diff = generateDiff(data1, data2, format);
+const runDiffTest = (file1Path, file2Path, expectedFilePath, format) => {
+  const file1 = getFileData(file1Path);
+  const file2 = getFileData(file2Path);
+  const expectedOutput = fs.readFileSync(expectedFilePath, 'utf-8').trim();
+  const diff = generateDiff(file1, file2, format);
   expect(diff).toBe(expectedOutput);
 };
 
 // Тесты
 test('genDiff JSON stylish', () => {
-  runTest(
+  runDiffTest(
     path.resolve('__fixtures__/file1.json'),
     path.resolve('__fixtures__/file2.json'),
     path.resolve('__fixtures__/expected_output.txt'),
@@ -29,7 +29,7 @@ test('genDiff JSON stylish', () => {
 });
 
 test('genDiff YAML stylish', () => {
-  runTest(
+  runDiffTest(
     path.resolve('__fixtures__/file1.yml'),
     path.resolve('__fixtures__/file2.yml'),
     path.resolve('__fixtures__/expected_output.txt'),
@@ -38,7 +38,7 @@ test('genDiff YAML stylish', () => {
 });
 
 test('genDiff JSON plain', () => {
-  runTest(
+  runDiffTest(
     path.resolve('__fixtures__/file1.json'),
     path.resolve('__fixtures__/file2.json'),
     path.resolve('__fixtures__/expected_output_plain.txt'),
@@ -47,7 +47,7 @@ test('genDiff JSON plain', () => {
 });
 
 test('genDiff YAML plain', () => {
-  runTest(
+  runDiffTest(
     path.resolve('__fixtures__/file1.yml'),
     path.resolve('__fixtures__/file2.yml'),
     path.resolve('__fixtures__/expected_output_plain.txt'),
@@ -56,7 +56,7 @@ test('genDiff YAML plain', () => {
 });
 
 test('genDiff JSON json', () => {
-  runTest(
+  runDiffTest(
     path.resolve('__fixtures__/file1.json'),
     path.resolve('__fixtures__/file2.json'),
     path.resolve('__fixtures__/expected_output_json.json'),
@@ -65,7 +65,7 @@ test('genDiff JSON json', () => {
 });
 
 test('genDiff YAML json', () => {
-  runTest(
+  runDiffTest(
     path.resolve('__fixtures__/file1.yml'),
     path.resolve('__fixtures__/file2.yml'),
     path.resolve('__fixtures__/expected_output_json.json'),
