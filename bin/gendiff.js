@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
-import compareFiles from '../lib/compareFiles.js';
+import compareFiles from '../src/lib/compareFiles.js';
 
 const program = new Command();
 

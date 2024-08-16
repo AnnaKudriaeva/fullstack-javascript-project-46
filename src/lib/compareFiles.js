@@ -1,4 +1,4 @@
-import parseFile from './parsers.js';
+import parseFile from './parsersFile.js';
 import generateDiff from './gendiff.js';
 
 function compareFiles(filepath1, filepath2, format = 'stylish') {
