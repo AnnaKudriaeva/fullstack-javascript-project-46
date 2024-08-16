@@ -1,12 +1,12 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/AnnaKudriaeva/python-project-50/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/AnnaKudriaeva/fullstack-javascript-project-46/actions)
-[![Maintainability](https://api.codeclimate.com/v1/badges/bb4e44946b8eadb3df3a/maintainability)](https://codeclimate.com/github/AnnaKudriaeva/fullstack-javascript-project-46/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/bb4e44946b8eadb3df3a/test_coverage)](https://codeclimate.com/github/AnnaKudriaeva/fullstack-javascript-project-46/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/6c70ad89563215157d50/maintainability)](https://codeclimate.com/github/AnnaKudriaeva/fullstack-javascript-project-46/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/6c70ad89563215157d50/test_coverage)](https://codeclimate.com/github/AnnaKudriaeva/fullstack-javascript-project-46/test_coverage)
 
 An application for finding the difference in two files of json, yaml, yml formats and displaying the result in several variants
 
 ## Installation
-1. Requires Node.js 22.0.0 or higher
+1. Requires Node.js 20.0.0 or higher
 2. Clone the project: >> git clone https://github.com/AnnaKudriaeva/fullstack-javascript-project-46.git
 3. Install the project: >> make install
 
